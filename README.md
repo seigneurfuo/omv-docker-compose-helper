@@ -1,4 +1,4 @@
-Un outil pour lancer facilement les conteneurs en ligne de commande avec omv-docker-compose-helper.
+Un outil pour lancer facilement les conteneurs en ligne de commande avec le plugin docker-compose de OMV-extras.
 
 ## Commandes
 
