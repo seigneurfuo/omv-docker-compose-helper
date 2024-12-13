@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Version: 0.2.0
+# Version: 0.3.0
 
 import argparse
 from ast import arg
@@ -33,6 +33,7 @@ def main():
     argument_parser = argparse.ArgumentParser()
     argument_parser.add_argument("action", help="up | down | list")
     argument_parser.add_argument("--stack", help="")
+    argument_parser.add_argument('--ignore')
     args = argument_parser.parse_args()
 
     stacks = [
@@ -44,8 +45,21 @@ def main():
     # Tri par ordre alphabétique
     stacks.sort()
 
+    if args.ignore:
+        ignore_list = args.ignore.split(",")
+
+        for stack in ignore_list:
+            if stack not in stacks:
+                msg = f"Stack not found: {stack}"
+                print(msg)
+                exit()
+
+        # Filtrage
+        stacks = [stack for stack in stacks if stack not in ignore_list]
+
     if args.action == "list":
         msg = " ".join(stacks)
+        msg = f"{msg}\n{len(stacks)} stacks"
         print(msg)
         exit()
 
@@ -59,9 +73,8 @@ def main():
         exit()
 
 
-    stacks_count = len(stacks)
     for stack_index, stack in enumerate(stacks):
-        msg = f"\n[{stack_index+1}/{stacks_count}] {stack}"
+        msg = f"\n[{stack_index+1}/{len(stacks)}] {stack}"
         print(msg)
 
         execute_command(stack, args.action)
