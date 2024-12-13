@@ -1,4 +1,4 @@
-Un outil pour lancer facilement les conteneurs en ligne de commande avec omv-docker-compose.
+Un outil pour lancer facilement les conteneurs en ligne de commande avec omv-docker-compose-helper.
 
 ## Commandes
 
@@ -7,6 +7,8 @@ Un outil pour lancer facilement les conteneurs en ligne de commande avec omv-doc
   ```sh
   python3 omv-docker-compose-helper.py up
   ```
+
+  - On peut ajouter ```--ignore``` pour omettre certaines stacks: ```--ignore stack1,stack2```
 
 - Arrêter toutes les stacks:
 
@@ -22,8 +24,6 @@ Un outil pour lancer facilement les conteneurs en ligne de commande avec omv-doc
   python3 omv-docker-compose-helper.py --stack stack up
   ```
 
-  - On peut ajouter ```--ignore``` pour omettre certaines stacks: ```--ignore stack1,stack2```
-
 - Arrêter seulement une stack:
 
   ```sh
@@ -35,6 +35,4 @@ Un outil pour lancer facilement les conteneurs en ligne de commande avec omv-doc
   ```sh
   python3 omv-docker-compose-helper.py
   ```
-
-  
 
