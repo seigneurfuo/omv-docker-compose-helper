@@ -3,7 +3,6 @@
 # Version: 0.3.0
 
 import argparse
-from ast import arg
 import os
 
 STACKS_FOLDERPATH = "/docker"
@@ -21,17 +20,24 @@ def execute_command(stack, action):
     cmd = f"""/usr/bin/docker compose --file "{stack_folderpath}/{stack}.yml" \
         --file "{stack_folderpath}/compose.override.yml" \
         --env-file "{STACKS_FOLDERPATH}/global.env" \
-        --env-file "{stack_folderpath}/{stack}.env" {action}"""
+        --env-file "{stack_folderpath}/{stack}.env" """
 
-    # On lance en mode détaché si on lance en up
+    if action == "show":
+        cmd = cmd.strip()
+        print(cmd)
+        exit()
+
+    cmd += f" {action}"
+
+    # On lance en mode détaché et en supprimant les orphelins si on lance en up
     if action == "up":
-        cmd += " -d"
+        cmd += " --detach --remove-orphans"
 
     os.system(cmd)
 
 def main():
     argument_parser = argparse.ArgumentParser()
-    argument_parser.add_argument("action", help="up | down | list")
+    argument_parser.add_argument("action", help="up | down | stop | list | show | pull")
     argument_parser.add_argument("--stack", help="")
     argument_parser.add_argument('--ignore')
     args = argument_parser.parse_args()
@@ -63,7 +69,7 @@ def main():
         print(msg)
         exit()
 
-    elif args.action not in ["up", "down"]:
+    elif args.action not in ["up", "down", "stop", "show", "pull"]:
         argument_parser.print_help()
         exit()
 
@@ -71,7 +77,6 @@ def main():
     if args.stack:
         execute_command(args.stack, args.action)
         exit()
-
 
     for stack_index, stack in enumerate(stacks):
         msg = f"\n[{stack_index+1}/{len(stacks)}] {stack}"
