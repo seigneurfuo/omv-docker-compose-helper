@@ -1,5 +1,7 @@
 Un outil pour lancer facilement les conteneurs en ligne de commande avec le plugin docker-compose de OMV-extras.
 
+Note: Bien penser à modifier la variable du chemin par défaut de l'emplacement des stacks.
+
 ## Commandes
 
 - Lancer toutes les stacks:
